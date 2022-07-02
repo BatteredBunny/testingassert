@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// Assert / makes sure value is true, exists with custom error message
 func Assert(t *testing.T, val bool, message string) {
 	t.Helper()
 
