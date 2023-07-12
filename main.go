@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// Assert / makes sure value is true, exists with custom error message
+// Assert makes sure value is true, exits with custom error message
 func Assert(t *testing.T, val bool, message string) {
 	t.Helper()
 
@@ -14,7 +14,7 @@ func Assert(t *testing.T, val bool, message string) {
 	}
 }
 
-// AssertEquals / Compares comparable types
+// AssertEquals compares comparable types
 func AssertEquals[T comparable](t *testing.T, first T, second T) {
 	t.Helper()
 
@@ -25,7 +25,7 @@ func AssertEquals[T comparable](t *testing.T, first T, second T) {
 	}
 }
 
-// AssertEqualsMsg / AssertEquals with custom error message
+// AssertEqualsMsg is the error message variant of AssertEquals
 func AssertEqualsMsg[T comparable](t *testing.T, first T, second T, message string) {
 	t.Helper()
 
@@ -36,8 +36,8 @@ func AssertEqualsMsg[T comparable](t *testing.T, first T, second T, message stri
 	}
 }
 
-// AssertEqualsDeep / AssertEquals with reflect
-func AssertEqualsDeep[T any](t *testing.T, first T, second T) {
+// AssertEqualsDeep is AssertEquals with reflect
+func AssertEqualsDeep(t *testing.T, first any, second any) {
 	t.Helper()
 
 	if !reflect.DeepEqual(first, second) {
@@ -47,8 +47,8 @@ func AssertEqualsDeep[T any](t *testing.T, first T, second T) {
 	}
 }
 
-// AssertEqualsDeepMsg / AssertEqualsDeep with custom error message
-func AssertEqualsDeepMsg[T any](t *testing.T, first T, second T, message string) {
+// AssertEqualsDeepMsg is the error message variant of AssertEqualsDeep
+func AssertEqualsDeepMsg(t *testing.T, first any, second any, message string) {
 	t.Helper()
 
 	if !reflect.DeepEqual(first, second) {
