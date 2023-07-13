@@ -19,7 +19,7 @@ func AssertEquals[T comparable](t *testing.T, first T, second T) {
 	t.Helper()
 
 	if first != second {
-		t.Fatalf("'%v' is not '%v'\n", first, second)
+		t.Fatalf("fail: '%v' is not '%v'\n", first, second)
 	} else {
 		t.Logf("'%v' is '%v'\n", first, second)
 	}
@@ -41,7 +41,7 @@ func AssertEqualsDeep(t *testing.T, first any, second any) {
 	t.Helper()
 
 	if !reflect.DeepEqual(first, second) {
-		t.Fatalf("'%v' is not '%v'\n", first, second)
+		t.Fatalf("fail: '%v' is not '%v'\n", first, second)
 	} else {
 		t.Logf("'%v' is '%v'\n", first, second)
 	}
@@ -55,5 +55,27 @@ func AssertEqualsDeepMsg(t *testing.T, first any, second any, message string) {
 		t.Fatal(message)
 	} else {
 		t.Logf("'%v' is '%v'\n", first, second)
+	}
+}
+
+// AssertNotEqual makes sure inputs arent equal
+func AssertNotEquals[T comparable](t *testing.T, first T, second T) {
+	t.Helper()
+
+	if first != second {
+		t.Logf("'%v' is not '%v'\n", first, second)
+	} else {
+		t.Fatalf("fail: '%v' is '%v'\n", first, second)
+	}
+}
+
+// AssertNotEqualsDeep is AssertNotEqual with reflect
+func AssertNotEqualsDeep(t *testing.T, first any, second any) {
+	t.Helper()
+
+	if !reflect.DeepEqual(first, second) {
+		t.Logf("'%v' is not '%v'\n", first, second)
+	} else {
+		t.Fatalf("fail: '%v' is '%v'\n", first, second)
 	}
 }
