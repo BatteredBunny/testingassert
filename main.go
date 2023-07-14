@@ -8,6 +8,7 @@ import (
 // toggles if it should announce succeeding cases
 var HideSuccess = false
 
+// the testing function state
 var TestState *testing.T
 
 // Assert makes sure value is true, exits with custom error message
