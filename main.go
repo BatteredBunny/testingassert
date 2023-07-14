@@ -1,81 +1,50 @@
-package testingassert
+package assert
 
 import (
 	"reflect"
 	"testing"
 )
 
+// toggles if it should announce succeeding cases
+var HideSuccess = false
+
 // Assert makes sure value is true, exits with custom error message
-func Assert(t *testing.T, val bool, message string) {
+func Assert(t *testing.T, val bool, failReason string) {
 	t.Helper()
 
 	if !val {
-		t.Fatal(message)
+		t.Fatalf("fail: %s\n", failReason)
 	}
 }
 
-// AssertEquals compares comparable types
-func AssertEquals[T comparable](t *testing.T, first T, second T) {
+// Equals makes sure values are equal
+func Equals(t *testing.T, a any, b any, customErrorMessage *string) {
 	t.Helper()
 
-	if first != second {
-		t.Fatalf("fail: '%v' is not '%v'\n", first, second)
-	} else {
-		t.Logf("'%v' is '%v'\n", first, second)
+	if !reflect.DeepEqual(a, b) {
+		if customErrorMessage != nil {
+			t.Fatalf("fail: %s\n", *customErrorMessage)
+		} else {
+			t.Fatalf("fail: '%v' is not '%v'\n", a, b)
+		}
+	} else if !HideSuccess {
+		t.Logf("success: '%v' is '%v'\n", a, b)
 	}
 }
 
-// AssertEqualsMsg is the error message variant of AssertEquals
-func AssertEqualsMsg[T comparable](t *testing.T, first T, second T, message string) {
+// NotEquals makes sure values arent equal
+func NotEquals(t *testing.T, a any, b any, customErrorMessage *string) {
 	t.Helper()
 
-	if first != second {
-		t.Fatal(message)
+	if !reflect.DeepEqual(a, b) {
+		if !HideSuccess {
+			t.Logf("success: '%v' is not '%v'\n", a, b)
+		}
 	} else {
-		t.Logf("'%v' is '%v'\n", first, second)
-	}
-}
-
-// AssertEqualsDeep is AssertEquals with reflect
-func AssertEqualsDeep(t *testing.T, first any, second any) {
-	t.Helper()
-
-	if !reflect.DeepEqual(first, second) {
-		t.Fatalf("fail: '%v' is not '%v'\n", first, second)
-	} else {
-		t.Logf("'%v' is '%v'\n", first, second)
-	}
-}
-
-// AssertEqualsDeepMsg is the error message variant of AssertEqualsDeep
-func AssertEqualsDeepMsg(t *testing.T, first any, second any, message string) {
-	t.Helper()
-
-	if !reflect.DeepEqual(first, second) {
-		t.Fatal(message)
-	} else {
-		t.Logf("'%v' is '%v'\n", first, second)
-	}
-}
-
-// AssertNotEqual makes sure inputs arent equal
-func AssertNotEquals[T comparable](t *testing.T, first T, second T) {
-	t.Helper()
-
-	if first != second {
-		t.Logf("'%v' is not '%v'\n", first, second)
-	} else {
-		t.Fatalf("fail: '%v' is '%v'\n", first, second)
-	}
-}
-
-// AssertNotEqualsDeep is AssertNotEqual with reflect
-func AssertNotEqualsDeep(t *testing.T, first any, second any) {
-	t.Helper()
-
-	if !reflect.DeepEqual(first, second) {
-		t.Logf("'%v' is not '%v'\n", first, second)
-	} else {
-		t.Fatalf("fail: '%v' is '%v'\n", first, second)
+		if customErrorMessage != nil {
+			t.Fatalf("fail: %s\n", *customErrorMessage)
+		} else {
+			t.Fatalf("fail: '%v' is '%v'\n", a, b)
+		}
 	}
 }
