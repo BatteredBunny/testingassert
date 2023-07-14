@@ -18,12 +18,12 @@ func Assert(t *testing.T, val bool, failReason string) {
 }
 
 // Equals makes sure values are equal
-func Equals(t *testing.T, a any, b any, customErrorMessage *string) {
+func Equals(t *testing.T, a any, b any, customErrorMessage ...string) {
 	t.Helper()
 
 	if !reflect.DeepEqual(a, b) {
-		if customErrorMessage != nil {
-			t.Fatalf("fail: %s\n", *customErrorMessage)
+		if len(customErrorMessage) > 0 {
+			t.Fatalf("fail: %s\n", customErrorMessage[0])
 		} else {
 			t.Fatalf("fail: '%v' is not '%v'\n", a, b)
 		}
@@ -33,7 +33,7 @@ func Equals(t *testing.T, a any, b any, customErrorMessage *string) {
 }
 
 // NotEquals makes sure values arent equal
-func NotEquals(t *testing.T, a any, b any, customErrorMessage *string) {
+func NotEquals(t *testing.T, a any, b any, customErrorMessage ...string) {
 	t.Helper()
 
 	if !reflect.DeepEqual(a, b) {
@@ -41,8 +41,8 @@ func NotEquals(t *testing.T, a any, b any, customErrorMessage *string) {
 			t.Logf("success: '%v' is not '%v'\n", a, b)
 		}
 	} else {
-		if customErrorMessage != nil {
-			t.Fatalf("fail: %s\n", *customErrorMessage)
+		if len(customErrorMessage) > 0 {
+			t.Fatalf("fail: %s\n", customErrorMessage[0])
 		} else {
 			t.Fatalf("fail: '%v' is '%v'\n", a, b)
 		}
