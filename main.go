@@ -21,7 +21,7 @@ func Assert(val bool, failReason string) {
 }
 
 // Equals makes sure values are equal
-func Equals(a any, b any, customErrorMessage ...string) {
+func Equals(a, b any, customErrorMessage ...string) {
 	TestState.Helper()
 
 	if !reflect.DeepEqual(a, b) {
@@ -36,7 +36,7 @@ func Equals(a any, b any, customErrorMessage ...string) {
 }
 
 // NotEquals makes sure values arent equal
-func NotEquals(a any, b any, customErrorMessage ...string) {
+func NotEquals(a, b any, customErrorMessage ...string) {
 	TestState.Helper()
 
 	if !reflect.DeepEqual(a, b) {
